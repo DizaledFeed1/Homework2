@@ -32,9 +32,9 @@ public class Audit {
         Object result = joinPoint.proceed();
         message.append(" Result: " + result);
 
-        if ("KAFKA".equalsIgnoreCase(auditProperties.getMode())) {
+        if ("KAFKA".equalsIgnoreCase(auditProperties.getMode().toString())) {
             kafkaTemplate.send(auditProperties.getKafkaTopic(), message.toString());
-        } else if ("LOG".equalsIgnoreCase(auditProperties.getMode())) {
+        } else if ("LOG".equalsIgnoreCase(auditProperties.getMode().toString())) {
             log.info(message.toString());
         } else {
             log.warn("Введены некоректные настройки");

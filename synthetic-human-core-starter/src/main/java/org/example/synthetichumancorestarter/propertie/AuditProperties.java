@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "spring.audit")
 public class AuditProperties {
-    private String mode = "LOG";
+
+    private AuditMode mode = AuditMode.LOG;
     private String kafkaTopic = "audit-topic";
 }

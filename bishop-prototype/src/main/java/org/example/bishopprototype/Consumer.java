@@ -11,7 +11,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 @Data
 public class Consumer {
 
-
     @KafkaListener(topics = "${spring.kafka.topicName}", groupId = "1", containerFactory = "kafkaListenerContainerFactory")
     void listener(String message) {
         log.info(message);

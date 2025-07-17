@@ -3,9 +3,18 @@ spring:
         name: bishop-prototype
 
     audit:
-        mode: KAFKA
+        mode: LOG
         kafka-topic: audit-topic
 
     kafka:
         bootstrap-servers: localhost:29092
         topicName: "audit-topic"
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health, info, prometheus
+    endpoint:
+        prometheus:
+            enabled: true

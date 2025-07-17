@@ -19,8 +19,6 @@ public class AspectTest {
     @Test
     void testAspectTriggered() {
         Map<String, Long> result = commandService.getDoneCommands();
-        // Просто вызвать метод и проверить в логах, что аспект сработал.
-        // Можно дополнительно проверить, что результат вызова не null
         System.out.println("Result: " + result);
     }
 

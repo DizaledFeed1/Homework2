@@ -29,7 +29,6 @@ public class CommandService {
     private MeterRegistry meterRegistry;
 
     private final  AtomicInteger  testCounter;
-    private final Counter doneCommandsCounter;
 
 
     public CommandService(MeterRegistry meterRegistry) {
@@ -41,7 +40,6 @@ public class CommandService {
                 new ThreadPoolExecutor.AbortPolicy()
         );
         testCounter = meterRegistry.gauge("queue_size", new AtomicInteger(0));
-        doneCommandsCounter = meterRegistry.counter("done_commands");
     }
 
     @WeylandWatchingYou
@@ -72,10 +70,15 @@ public class CommandService {
             try {
                 commonExecutor.submit(task);
             } catch (RejectedExecutionException e) {
-                log.error("Queue is full, task rejected", e);
+                log.error("Queue is full, task rejected");
                 throw new RuntimeException("Очередь переполнена, задача отклонена", e);
             }
         }
+    }
+
+    @WeylandWatchingYou
+    public void commandPurge(){
+        commonExecutor.getQueue().clear();
     }
 
     @Scheduled(fixedRateString = "1000", initialDelayString = "0")
