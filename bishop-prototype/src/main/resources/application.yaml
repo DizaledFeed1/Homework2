@@ -1,0 +1,11 @@
+spring:
+    application:
+        name: bishop-prototype
+
+    audit:
+        mode: KAFKA
+        kafka-topic: audit-topic
+
+    kafka:
+        bootstrap-servers: localhost:29092
+        topicName: "audit-topic"

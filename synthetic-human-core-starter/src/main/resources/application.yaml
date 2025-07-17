@@ -1,0 +1,29 @@
+spring:
+  #базовые значения
+  audit:
+    mode: KAFKA
+    kafka-topic: audit-topic
+
+  application:
+    name: synthetic-human-core-starter
+
+  kafka:
+    bootstrap-servers: localhost:29092
+    topicName: "audit-topic"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+
+logging:
+  level:
+    org.example.synthetichumancorestarter.aspect: INFO
+    org.example.synthetichumancorestarter.service: INFO
+    org.springframework.aop: DEBUG
+    org.aspectj: DEBUG
+

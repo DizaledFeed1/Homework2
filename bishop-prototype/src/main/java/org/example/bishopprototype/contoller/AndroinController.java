@@ -1,20 +1,29 @@
-package org.example.bishopprototype;
+package org.example.bishopprototype.contoller;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.example.synthetichumancorestarter.dto.CommandDTO;
 import org.example.synthetichumancorestarter.service.CommandService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.concurrent.RejectedExecutionException;
+
 
 @RestController
 @RequestMapping("/api/v1/android")
+@Slf4j
 public class AndroinController {
 
-    CommandService commandService = new CommandService();
+    @Autowired
+    private CommandService commandService;
+    @Autowired
+    private ApplicationContext context;
 
     @PostMapping("/addCommand")
     public ResponseEntity<?> addCommand(@Valid @RequestBody CommandDTO commandDTO) {
@@ -29,13 +38,16 @@ public class AndroinController {
     @GetMapping("/commandCount")
     public ResponseEntity<?> getCommandCount() {
         StringBuilder responce = new StringBuilder();
-        responce.append("Колличество задач в очереди: ").append(commandService.commandCount());
+
         return ResponseEntity.ok(responce);
     }
 
     @GetMapping("/doneCommands")
     public ResponseEntity<?> getDoneCommands() {
-        return ResponseEntity.ok().body(commandService.getDoneCommands());
+        CommandService proxy = context.getBean(CommandService.class);
+        Map<String, Long> result = proxy.getDoneCommands();
+
+        return ResponseEntity.ok().body(result);
     }
 
 
